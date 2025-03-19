@@ -452,7 +452,9 @@ var ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */ __webpack_require
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_0___);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `.config-screen {
+___CSS_LOADER_EXPORT___.push([module.id, `/* src/renderer/ConfigScreen.css - Updated CSS with additions for multi-model support */
+
+.config-screen {
   position: fixed;
   top: 0px;
   left: 50%;
@@ -466,6 +468,8 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.config-screen {
   border-radius: 8px;
   width: 400px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.815);
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
 }
 
 .config-container h2 {
@@ -500,7 +504,8 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.config-screen {
 .api-key-input input {
   flex: 1;
   padding: 0.4rem 0.75rem;
-  padding-right: 60px; /* Make space for the button */
+  padding-right: 60px;
+  /* Make space for the button */
   font-size: 0.85rem;
   border: none;
   border-radius: 4px;
@@ -603,7 +608,58 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.config-screen {
 .save-button:active {
   background: rgba(0, 0, 0, 0.4);
   transform: translateY(1px);
-} `, "",{"version":3,"sources":["webpack://./src/renderer/ConfigScreen.css"],"names":[],"mappings":"AAAA;EACE,eAAe;EACf,QAAQ;EACR,SAAS;EACT,2BAA2B;EAC3B,aAAa;AACf;;AAEA;EACE,gCAAgC;EAChC,aAAa;EACb,kBAAkB;EAClB,YAAY;EACZ,2CAA2C;AAC7C;;AAEA;EACE,cAAc;EACd,mBAAmB;EACnB,kBAAkB;EAClB,iBAAiB;EACjB,mBAAmB;AACrB;;AAEA;EACE,sBAAsB;AACxB;;AAEA;EACE,cAAc;EACd,cAAc;EACd,sBAAsB;EACtB,iBAAiB;AACnB;;AAEA;EACE,kBAAkB;EAClB,aAAa;EACb,mBAAmB;EACnB,8BAA8B;EAC9B,kBAAkB;EAClB,YAAY;EACZ,eAAe;AACjB;;AAEA;EACE,OAAO;EACP,uBAAuB;EACvB,mBAAmB,EAAE,8BAA8B;EACnD,kBAAkB;EAClB,YAAY;EACZ,kBAAkB;EAClB,uBAAuB;EACvB,cAAc;EACd,oEAAoE;EACpE,qBAAqB;EACrB,WAAW;EACX,YAAY;EACZ,uBAAuB;EACvB,mBAAmB;EACnB,gBAAgB;AAClB;;AAEA;EACE,kBAAkB;EAClB,UAAU;EACV,gBAAgB;EAChB,YAAY;EACZ,cAAc;EACd,eAAe;EACf,YAAY;EACZ,wBAAwB;EACxB,gBAAgB;EAChB,iBAAiB;EACjB,kBAAkB;EAClB,eAAe;EACf,kBAAkB;AACpB;;AAEA;EACE,UAAU;EACV,oCAAoC;AACtC;;AAEA;EACE,kBAAkB;EAClB,kBAAkB;EAClB,+BAA+B;AACjC;;AAEA;EACE,cAAc;EACd,qBAAqB;EACrB,sBAAsB;AACxB;;AAEA;EACE,cAAc;EACd,0BAA0B;AAC5B;;AAEA;EACE,WAAW;EACX,uBAAuB;EACvB,kBAAkB;EAClB,YAAY;EACZ,kBAAkB;EAClB,8BAA8B;EAC9B,cAAc;EACd,eAAe;EACf,gBAAgB;EAChB,yDAAwR;EACxR,4BAA4B;EAC5B,yCAAyC;EACzC,oBAAoB;EACpB,YAAY;AACd;;AAEA;;EAEE,aAAa;EACb,6CAA6C;AAC/C;;AAEA;EACE,gBAAgB;EAChB,aAAa;EACb,uBAAuB;AACzB;;AAEA;EACE,uBAAuB;EACvB,8BAA8B;EAC9B,cAAc;EACd,0CAA0C;EAC1C,kBAAkB;EAClB,kBAAkB;EAClB,eAAe;EACf,oBAAoB;EACpB,gBAAgB;EAChB,YAAY;AACd;;AAEA;EACE,oCAAoC;EACpC,sCAAsC;AACxC;;AAEA;EACE,8BAA8B;EAC9B,0BAA0B;AAC5B","sourcesContent":[".config-screen {\r\n  position: fixed;\r\n  top: 0px;\r\n  left: 50%;\r\n  transform: translateX(-50%);\r\n  z-index: 1000;\r\n}\r\n\r\n.config-container {\r\n  background: rgba(0, 0, 0, 0.688);\r\n  padding: 1rem;\r\n  border-radius: 8px;\r\n  width: 400px;\r\n  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.815);\r\n}\r\n\r\n.config-container h2 {\r\n  color: #edf1f5;\r\n  margin-bottom: 1rem;\r\n  text-align: center;\r\n  font-size: 0.9rem;\r\n  font-weight: normal;\r\n}\r\n\r\n.form-group {\r\n  margin-bottom: 0.75rem;\r\n}\r\n\r\n.form-group label {\r\n  display: block;\r\n  color: #edf1f5;\r\n  margin-bottom: 0.25rem;\r\n  font-size: 0.8rem;\r\n}\r\n\r\n.api-key-input {\r\n  position: relative;\r\n  display: flex;\r\n  align-items: center;\r\n  background: rgba(0, 0, 0, 0.3);\r\n  border-radius: 4px;\r\n  height: 32px;\r\n  max-width: 100%;\r\n}\r\n\r\n.api-key-input input {\r\n  flex: 1;\r\n  padding: 0.4rem 0.75rem;\r\n  padding-right: 60px; /* Make space for the button */\r\n  font-size: 0.85rem;\r\n  border: none;\r\n  border-radius: 4px;\r\n  background: transparent;\r\n  color: #c6c9cc;\r\n  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;\r\n  letter-spacing: 0.5px;\r\n  width: 100%;\r\n  height: 100%;\r\n  text-overflow: ellipsis;\r\n  white-space: nowrap;\r\n  overflow: hidden;\r\n}\r\n\r\n.api-key-input .toggle-visibility {\r\n  position: absolute;\r\n  right: 4px;\r\n  background: none;\r\n  border: none;\r\n  color: #7c8089;\r\n  cursor: pointer;\r\n  opacity: 0.7;\r\n  transition: opacity 0.2s;\r\n  padding: 4px 8px;\r\n  font-size: 0.8rem;\r\n  border-radius: 4px;\r\n  min-width: 50px;\r\n  text-align: center;\r\n}\r\n\r\n.api-key-input .toggle-visibility:hover {\r\n  opacity: 1;\r\n  background: rgba(255, 255, 255, 0.1);\r\n}\r\n\r\n.api-key-help {\r\n  margin-top: 0.5rem;\r\n  font-size: 0.85rem;\r\n  color: rgba(255, 255, 255, 0.6);\r\n}\r\n\r\n.api-key-help a {\r\n  color: #61afef;\r\n  text-decoration: none;\r\n  transition: color 0.2s;\r\n}\r\n\r\n.api-key-help a:hover {\r\n  color: #8ac7ff;\r\n  text-decoration: underline;\r\n}\r\n\r\n.form-group select {\r\n  width: 100%;\r\n  padding: 0.4rem 0.75rem;\r\n  font-size: 0.85rem;\r\n  border: none;\r\n  border-radius: 4px;\r\n  background: rgba(0, 0, 0, 0.3);\r\n  color: #c6c9cc;\r\n  cursor: pointer;\r\n  appearance: none;\r\n  background-image: url(\"data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237c8089' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e\");\r\n  background-repeat: no-repeat;\r\n  background-position: right 0.75rem center;\r\n  background-size: 1em;\r\n  height: 32px;\r\n}\r\n\r\n.form-group input:focus,\r\n.form-group select:focus {\r\n  outline: none;\r\n  box-shadow: 0 0 0 1px rgba(97, 175, 239, 0.3);\r\n}\r\n\r\n.form-actions {\r\n  margin-top: 1rem;\r\n  display: flex;\r\n  justify-content: center;\r\n}\r\n\r\n.save-button {\r\n  padding: 0.4rem 1.25rem;\r\n  background: rgba(0, 0, 0, 0.3);\r\n  color: #c6c9cc;\r\n  border: 1px solid rgba(255, 255, 255, 0.1);\r\n  border-radius: 4px;\r\n  font-size: 0.85rem;\r\n  cursor: pointer;\r\n  transition: all 0.2s;\r\n  min-width: 120px;\r\n  height: 32px;\r\n}\r\n\r\n.save-button:hover {\r\n  background: rgba(255, 255, 255, 0.1);\r\n  border-color: rgba(255, 255, 255, 0.2);\r\n}\r\n\r\n.save-button:active {\r\n  background: rgba(0, 0, 0, 0.4);\r\n  transform: translateY(1px);\r\n} "],"sourceRoot":""}]);
+}
+
+/* New styles for fallback API keys */
+.fallback-keys {
+  margin-top: 1rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.fallback-label {
+  color: #abb2bf;
+  font-size: 0.7rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.fallback-key-input {
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.fallback-key-input label {
+  color: #abb2bf;
+  font-size: 0.7rem;
+}
+
+/* Model selection indicators */
+.model-indicator {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.6rem;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.model-openai {
+  background-color: rgba(16, 163, 127, 0.2);
+  color: #10a37f;
+}
+
+.model-gemini {
+  background-color: rgba(66, 133, 244, 0.2);
+  color: #4285f4;
+}
+
+.model-claude {
+  background-color: rgba(255, 140, 0, 0.2);
+  color: #ff8c00;
+}`, "",{"version":3,"sources":["webpack://./src/renderer/ConfigScreen.css"],"names":[],"mappings":"AAAA,uFAAuF;;AAEvF;EACE,eAAe;EACf,QAAQ;EACR,SAAS;EACT,2BAA2B;EAC3B,aAAa;AACf;;AAEA;EACE,gCAAgC;EAChC,aAAa;EACb,kBAAkB;EAClB,YAAY;EACZ,2CAA2C;EAC3C,8BAA8B;EAC9B,gBAAgB;AAClB;;AAEA;EACE,cAAc;EACd,mBAAmB;EACnB,kBAAkB;EAClB,iBAAiB;EACjB,mBAAmB;AACrB;;AAEA;EACE,sBAAsB;AACxB;;AAEA;EACE,cAAc;EACd,cAAc;EACd,sBAAsB;EACtB,iBAAiB;AACnB;;AAEA;EACE,kBAAkB;EAClB,aAAa;EACb,mBAAmB;EACnB,8BAA8B;EAC9B,kBAAkB;EAClB,YAAY;EACZ,eAAe;AACjB;;AAEA;EACE,OAAO;EACP,uBAAuB;EACvB,mBAAmB;EACnB,8BAA8B;EAC9B,kBAAkB;EAClB,YAAY;EACZ,kBAAkB;EAClB,uBAAuB;EACvB,cAAc;EACd,oEAAoE;EACpE,qBAAqB;EACrB,WAAW;EACX,YAAY;EACZ,uBAAuB;EACvB,mBAAmB;EACnB,gBAAgB;AAClB;;AAEA;EACE,kBAAkB;EAClB,UAAU;EACV,gBAAgB;EAChB,YAAY;EACZ,cAAc;EACd,eAAe;EACf,YAAY;EACZ,wBAAwB;EACxB,gBAAgB;EAChB,iBAAiB;EACjB,kBAAkB;EAClB,eAAe;EACf,kBAAkB;AACpB;;AAEA;EACE,UAAU;EACV,oCAAoC;AACtC;;AAEA;EACE,kBAAkB;EAClB,kBAAkB;EAClB,+BAA+B;AACjC;;AAEA;EACE,cAAc;EACd,qBAAqB;EACrB,sBAAsB;AACxB;;AAEA;EACE,cAAc;EACd,0BAA0B;AAC5B;;AAEA;EACE,WAAW;EACX,uBAAuB;EACvB,kBAAkB;EAClB,YAAY;EACZ,kBAAkB;EAClB,8BAA8B;EAC9B,cAAc;EACd,eAAe;EACf,gBAAgB;EAChB,yDAAwR;EACxR,4BAA4B;EAC5B,yCAAyC;EACzC,oBAAoB;EACpB,YAAY;AACd;;AAEA;;EAEE,aAAa;EACb,6CAA6C;AAC/C;;AAEA;EACE,gBAAgB;EAChB,aAAa;EACb,uBAAuB;AACzB;;AAEA;EACE,uBAAuB;EACvB,8BAA8B;EAC9B,cAAc;EACd,0CAA0C;EAC1C,kBAAkB;EAClB,kBAAkB;EAClB,eAAe;EACf,oBAAoB;EACpB,gBAAgB;EAChB,YAAY;AACd;;AAEA;EACE,oCAAoC;EACpC,sCAAsC;AACxC;;AAEA;EACE,8BAA8B;EAC9B,0BAA0B;AAC5B;;AAEA,qCAAqC;AACrC;EACE,gBAAgB;EAChB,mBAAmB;EACnB,8CAA8C;AAChD;;AAEA;EACE,cAAc;EACd,iBAAiB;EACjB,qBAAqB;EACrB,cAAc;AAChB;;AAEA;EACE,qBAAqB;EACrB,eAAe;EACf,8BAA8B;EAC9B,kBAAkB;AACpB;;AAEA;EACE,cAAc;EACd,iBAAiB;AACnB;;AAEA,+BAA+B;AAC/B;EACE,qBAAqB;EACrB,gBAAgB;EAChB,kBAAkB;EAClB,iBAAiB;EACjB,gBAAgB;EAChB,sBAAsB;AACxB;;AAEA;EACE,yCAAyC;EACzC,cAAc;AAChB;;AAEA;EACE,yCAAyC;EACzC,cAAc;AAChB;;AAEA;EACE,wCAAwC;EACxC,cAAc;AAChB","sourcesContent":["/* src/renderer/ConfigScreen.css - Updated CSS with additions for multi-model support */\r\n\r\n.config-screen {\r\n  position: fixed;\r\n  top: 0px;\r\n  left: 50%;\r\n  transform: translateX(-50%);\r\n  z-index: 1000;\r\n}\r\n\r\n.config-container {\r\n  background: rgba(0, 0, 0, 0.688);\r\n  padding: 1rem;\r\n  border-radius: 8px;\r\n  width: 400px;\r\n  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.815);\r\n  max-height: calc(100vh - 40px);\r\n  overflow-y: auto;\r\n}\r\n\r\n.config-container h2 {\r\n  color: #edf1f5;\r\n  margin-bottom: 1rem;\r\n  text-align: center;\r\n  font-size: 0.9rem;\r\n  font-weight: normal;\r\n}\r\n\r\n.form-group {\r\n  margin-bottom: 0.75rem;\r\n}\r\n\r\n.form-group label {\r\n  display: block;\r\n  color: #edf1f5;\r\n  margin-bottom: 0.25rem;\r\n  font-size: 0.8rem;\r\n}\r\n\r\n.api-key-input {\r\n  position: relative;\r\n  display: flex;\r\n  align-items: center;\r\n  background: rgba(0, 0, 0, 0.3);\r\n  border-radius: 4px;\r\n  height: 32px;\r\n  max-width: 100%;\r\n}\r\n\r\n.api-key-input input {\r\n  flex: 1;\r\n  padding: 0.4rem 0.75rem;\r\n  padding-right: 60px;\r\n  /* Make space for the button */\r\n  font-size: 0.85rem;\r\n  border: none;\r\n  border-radius: 4px;\r\n  background: transparent;\r\n  color: #c6c9cc;\r\n  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;\r\n  letter-spacing: 0.5px;\r\n  width: 100%;\r\n  height: 100%;\r\n  text-overflow: ellipsis;\r\n  white-space: nowrap;\r\n  overflow: hidden;\r\n}\r\n\r\n.api-key-input .toggle-visibility {\r\n  position: absolute;\r\n  right: 4px;\r\n  background: none;\r\n  border: none;\r\n  color: #7c8089;\r\n  cursor: pointer;\r\n  opacity: 0.7;\r\n  transition: opacity 0.2s;\r\n  padding: 4px 8px;\r\n  font-size: 0.8rem;\r\n  border-radius: 4px;\r\n  min-width: 50px;\r\n  text-align: center;\r\n}\r\n\r\n.api-key-input .toggle-visibility:hover {\r\n  opacity: 1;\r\n  background: rgba(255, 255, 255, 0.1);\r\n}\r\n\r\n.api-key-help {\r\n  margin-top: 0.5rem;\r\n  font-size: 0.85rem;\r\n  color: rgba(255, 255, 255, 0.6);\r\n}\r\n\r\n.api-key-help a {\r\n  color: #61afef;\r\n  text-decoration: none;\r\n  transition: color 0.2s;\r\n}\r\n\r\n.api-key-help a:hover {\r\n  color: #8ac7ff;\r\n  text-decoration: underline;\r\n}\r\n\r\n.form-group select {\r\n  width: 100%;\r\n  padding: 0.4rem 0.75rem;\r\n  font-size: 0.85rem;\r\n  border: none;\r\n  border-radius: 4px;\r\n  background: rgba(0, 0, 0, 0.3);\r\n  color: #c6c9cc;\r\n  cursor: pointer;\r\n  appearance: none;\r\n  background-image: url(\"data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237c8089' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e\");\r\n  background-repeat: no-repeat;\r\n  background-position: right 0.75rem center;\r\n  background-size: 1em;\r\n  height: 32px;\r\n}\r\n\r\n.form-group input:focus,\r\n.form-group select:focus {\r\n  outline: none;\r\n  box-shadow: 0 0 0 1px rgba(97, 175, 239, 0.3);\r\n}\r\n\r\n.form-actions {\r\n  margin-top: 1rem;\r\n  display: flex;\r\n  justify-content: center;\r\n}\r\n\r\n.save-button {\r\n  padding: 0.4rem 1.25rem;\r\n  background: rgba(0, 0, 0, 0.3);\r\n  color: #c6c9cc;\r\n  border: 1px solid rgba(255, 255, 255, 0.1);\r\n  border-radius: 4px;\r\n  font-size: 0.85rem;\r\n  cursor: pointer;\r\n  transition: all 0.2s;\r\n  min-width: 120px;\r\n  height: 32px;\r\n}\r\n\r\n.save-button:hover {\r\n  background: rgba(255, 255, 255, 0.1);\r\n  border-color: rgba(255, 255, 255, 0.2);\r\n}\r\n\r\n.save-button:active {\r\n  background: rgba(0, 0, 0, 0.4);\r\n  transform: translateY(1px);\r\n}\r\n\r\n/* New styles for fallback API keys */\r\n.fallback-keys {\r\n  margin-top: 1rem;\r\n  padding-top: 0.5rem;\r\n  border-top: 1px solid rgba(255, 255, 255, 0.1);\r\n}\r\n\r\n.fallback-label {\r\n  color: #abb2bf;\r\n  font-size: 0.7rem;\r\n  margin-bottom: 0.5rem;\r\n  display: block;\r\n}\r\n\r\n.fallback-key-input {\r\n  margin-bottom: 0.5rem;\r\n  padding: 0.5rem;\r\n  background: rgba(0, 0, 0, 0.2);\r\n  border-radius: 4px;\r\n}\r\n\r\n.fallback-key-input label {\r\n  color: #abb2bf;\r\n  font-size: 0.7rem;\r\n}\r\n\r\n/* Model selection indicators */\r\n.model-indicator {\r\n  display: inline-block;\r\n  padding: 2px 6px;\r\n  border-radius: 3px;\r\n  font-size: 0.6rem;\r\n  margin-left: 6px;\r\n  vertical-align: middle;\r\n}\r\n\r\n.model-openai {\r\n  background-color: rgba(16, 163, 127, 0.2);\r\n  color: #10a37f;\r\n}\r\n\r\n.model-gemini {\r\n  background-color: rgba(66, 133, 244, 0.2);\r\n  color: #4285f4;\r\n}\r\n\r\n.model-claude {\r\n  background-color: rgba(255, 140, 0, 0.2);\r\n  color: #ff8c00;\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -34530,6 +34586,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+// Updated config interface for multiple AI models
+
 const App = () => {
   const [isProcessing, setIsProcessing] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [result, setResult] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
@@ -34548,7 +34607,7 @@ const App = () => {
     loadConfig();
   }, []);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    console.log('Setting up event listeners...');
+    console.log("Setting up event listeners...");
 
     // Listen for show config events
     window.electron.onShowConfig(() => {
@@ -34557,45 +34616,45 @@ const App = () => {
 
     // Listen for processing started events
     window.electron.onProcessingStarted(() => {
-      console.log('Processing started');
+      console.log("Processing started");
       setIsProcessing(true);
       setResult(null);
     });
 
     // Keyboard event listener
     const handleKeyDown = async event => {
-      console.log('Key pressed:', event.key);
+      console.log("Key pressed:", event.key);
 
       // Check if Cmd/Ctrl is pressed
       const isCmdOrCtrl = event.metaKey || event.ctrlKey;
       switch (event.key.toLowerCase()) {
-        case 'h':
-          console.log('Screenshot hotkey pressed');
+        case "h":
+          console.log("Screenshot hotkey pressed");
           await handleTakeScreenshot();
           break;
-        case 'enter':
-          console.log('Process hotkey pressed');
+        case "enter":
+          console.log("Process hotkey pressed");
           await handleProcess();
           break;
-        case 'r':
-          console.log('Reset hotkey pressed');
+        case "r":
+          console.log("Reset hotkey pressed");
           await handleReset();
           break;
-        case 'p':
+        case "p":
           if (isCmdOrCtrl) {
-            console.log('Toggle config hotkey pressed');
+            console.log("Toggle config hotkey pressed");
             setShowConfig(prev => !prev);
           }
           break;
-        case 'b':
+        case "b":
           if (isCmdOrCtrl) {
-            console.log('Toggle visibility hotkey pressed');
+            console.log("Toggle visibility hotkey pressed");
             // Toggle visibility logic here
           }
           break;
-        case 'q':
+        case "q":
           if (isCmdOrCtrl) {
-            console.log('Quit hotkey pressed');
+            console.log("Quit hotkey pressed");
             handleQuit();
           }
           break;
@@ -34603,41 +34662,41 @@ const App = () => {
     };
 
     // Add keyboard event listener
-    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
 
     // Listen for processing complete events
     window.electron.onProcessingComplete(resultStr => {
-      console.log('Processing complete. Result:', resultStr);
+      console.log("Processing complete. Result:", resultStr);
       try {
         const parsedResult = JSON.parse(resultStr);
         setResult(parsedResult);
       } catch (error) {
-        console.error('Error parsing result:', error);
+        console.error("Error parsing result:", error);
       }
       setIsProcessing(false);
     });
 
     // Listen for new screenshots
     window.electron.onScreenshotTaken(screenshot => {
-      console.log('New screenshot taken:', screenshot);
+      console.log("New screenshot taken:", screenshot);
       setScreenshots(prev => {
         const newScreenshots = [...prev, screenshot];
-        console.log('Updated screenshots array:', newScreenshots);
+        console.log("Updated screenshots array:", newScreenshots);
         return newScreenshots;
       });
     });
 
     // Listen for queue reset
     window.electron.onQueueReset(() => {
-      console.log('Queue reset triggered');
+      console.log("Queue reset triggered");
       setScreenshots([]);
       setResult(null);
     });
 
     // Cleanup
     return () => {
-      console.log('Cleaning up event listeners...');
-      window.removeEventListener('keydown', handleKeyDown);
+      console.log("Cleaning up event listeners...");
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
@@ -34649,22 +34708,22 @@ const App = () => {
     }
   }, [error]);
   const handleTakeScreenshot = async () => {
-    console.log('Taking screenshot, current count:', screenshots.length);
+    console.log("Taking screenshot, current count:", screenshots.length);
     if (screenshots.length >= 4) {
-      console.log('Maximum screenshots reached');
+      console.log("Maximum screenshots reached");
       return;
     }
     try {
       await window.electron.takeScreenshot();
-      console.log('Screenshot taken successfully');
+      console.log("Screenshot taken successfully");
     } catch (error) {
-      console.error('Error taking screenshot:', error);
+      console.error("Error taking screenshot:", error);
     }
   };
   const handleProcess = async () => {
-    console.log('Starting processing. Current screenshots:', screenshots);
+    console.log("Starting processing. Current screenshots:", screenshots);
     if (screenshots.length === 0) {
-      console.log('No screenshots to process');
+      console.log("No screenshots to process");
       return;
     }
     setIsProcessing(true);
@@ -34672,20 +34731,41 @@ const App = () => {
     setError(null);
     try {
       await window.electron.processScreenshots();
-      console.log('Process request sent successfully');
+      console.log("Process request sent successfully");
     } catch (error) {
-      console.error('Error processing screenshots:', error);
-      setError(error?.message || 'Error processing screenshots');
+      console.error("Error processing screenshots:", error);
+      setError(error?.message || "Error processing screenshots");
       setIsProcessing(false);
     }
   };
   const handleReset = async () => {
-    console.log('Resetting queue...');
+    console.log("Resetting queue...");
     await window.electron.resetQueue();
   };
   const handleQuit = () => {
-    console.log('Quitting application...');
+    console.log("Quitting application...");
     window.electron.quit();
+  };
+
+  // Get the name of the active AI model
+  const getModelName = () => {
+    if (!config) return "AI";
+    switch (config.activeService) {
+      case "openai":
+        return "GPT-4o";
+      case "gemini":
+        return "Gemini";
+      case "claude":
+        return "Claude";
+      default:
+        return "AI";
+    }
+  };
+
+  // Get CSS class for styling the model indicator
+  const getModelClass = () => {
+    if (!config) return "";
+    return `model-${config.activeService}`;
   };
   const handleConfigSave = async newConfig => {
     try {
@@ -34695,24 +34775,24 @@ const App = () => {
         setShowConfig(false);
         setError(null);
       } else {
-        setError('Failed to save configuration');
+        setError("Failed to save configuration");
       }
     } catch (error) {
-      console.error('Error saving configuration:', error);
-      setError(error?.message || 'Error saving configuration');
+      console.error("Error saving configuration:", error);
+      setError(error?.message || "Error saving configuration");
     }
   };
 
   // Log state changes
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    console.log('State update:', {
+    console.log("State update:", {
       isProcessing,
       result,
       screenshotCount: screenshots.length
     });
   }, [isProcessing, result, screenshots]);
   const formatCode = code => {
-    return code.split('\n').map((line, index) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    return code.split("\n").map((line, index) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       key: index,
       className: "code-line"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
@@ -34737,6 +34817,10 @@ const App = () => {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("code", null, "\u2318/Ctrl + \u21B5"), " Solution"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "shortcut"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("code", null, "\u2318/Ctrl + R"), " Reset"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "shortcut"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    className: `model-indicator ${getModelClass()}`
+  }, getModelName())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "hover-shortcuts"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "hover-shortcuts-content"
@@ -34760,7 +34844,7 @@ const App = () => {
     className: "status-row"
   }, isProcessing ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "processing"
-  }, "Processing... (", screenshots.length, " screenshots)") : result ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, "Processing with ", getModelName(), "... (", screenshots.length, " ", "screenshots)") : result ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "result"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "solution-section"
@@ -34772,7 +34856,7 @@ const App = () => {
     className: "hint"
   }, "(Press \u2318/Ctrl + R to reset)")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "empty-status"
-  }, screenshots.length > 0 ? `Press ⌘/Ctrl + ↵ to process ${screenshots.length} screenshot${screenshots.length > 1 ? 's' : ''}` : 'Press ⌘/Ctrl + H to take a screenshot')));
+  }, screenshots.length > 0 ? `Press ⌘/Ctrl + ↵ to process ${screenshots.length} screenshot${screenshots.length > 1 ? "s" : ""} with ${getModelName()}` : "Press ⌘/Ctrl + H to take a screenshot")));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
 
@@ -34845,21 +34929,88 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _ConfigScreen_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ConfigScreen.css */ "./src/renderer/ConfigScreen.css");
+// src/renderer/ConfigScreen.tsx
 
 
 const ConfigScreen = ({
   onSave,
   initialConfig
 }) => {
-  const [apiKey, setApiKey] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialConfig?.apiKey || '');
-  const [language, setLanguage] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialConfig?.language || 'Python');
+  const [activeService, setActiveService] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialConfig?.activeService || "openai");
+  const [openaiApiKey, setOpenaiApiKey] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialConfig?.openaiApiKey || "");
+  const [geminiApiKey, setGeminiApiKey] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialConfig?.geminiApiKey || "");
+  const [claudeApiKey, setClaudeApiKey] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialConfig?.claudeApiKey || "");
+  const [language, setLanguage] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialConfig?.language || "Python");
   const [showApiKey, setShowApiKey] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const handleSubmit = e => {
     e.preventDefault();
-    onSave({
-      apiKey: apiKey.trim(),
+    const config = {
+      activeService,
       language
-    });
+    };
+
+    // Only include API keys that are set
+    if (openaiApiKey) config.openaiApiKey = openaiApiKey.trim();
+    if (geminiApiKey) config.geminiApiKey = geminiApiKey.trim();
+    if (claudeApiKey) config.claudeApiKey = claudeApiKey.trim();
+    onSave(config);
+  };
+
+  // Get the active API key based on selected service
+  const getActiveApiKey = () => {
+    switch (activeService) {
+      case "openai":
+        return openaiApiKey;
+      case "gemini":
+        return geminiApiKey;
+      case "claude":
+        return claudeApiKey;
+      default:
+        return "";
+    }
+  };
+
+  // Set the active API key based on selected service
+  const setActiveApiKey = value => {
+    switch (activeService) {
+      case "openai":
+        setOpenaiApiKey(value);
+        break;
+      case "gemini":
+        setGeminiApiKey(value);
+        break;
+      case "claude":
+        setClaudeApiKey(value);
+        break;
+    }
+  };
+
+  // Get placeholder text based on selected service
+  const getApiPlaceholder = () => {
+    switch (activeService) {
+      case "openai":
+        return "sk-...";
+      case "gemini":
+        return "AI...";
+      case "claude":
+        return "sk-ant-...";
+      default:
+        return "Enter API key";
+    }
+  };
+
+  // Get link for getting API key based on selected service
+  const getApiKeyLink = () => {
+    switch (activeService) {
+      case "openai":
+        return "https://platform.openai.com/account/api-keys";
+      case "gemini":
+        return "https://aistudio.google.com/app/apikey";
+      case "claude":
+        return "https://console.anthropic.com/settings/keys";
+      default:
+        return "#";
+    }
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "config-screen"
@@ -34870,23 +35021,90 @@ const ConfigScreen = ({
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "form-group"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "activeService"
+  }, "AI Service"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("select", {
+    id: "activeService",
+    value: activeService,
+    onChange: e => setActiveService(e.target.value),
+    required: true
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
+    value: "openai"
+  }, "OpenAI (GPT-4o)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
+    value: "gemini"
+  }, "Google Gemini"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
+    value: "claude"
+  }, "Anthropic Claude"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
     htmlFor: "apiKey"
-  }, "OpenAI API Key"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, activeService === "openai" ? "OpenAI" : activeService === "gemini" ? "Google Gemini" : "Anthropic Claude", " ", "API Key"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "api-key-input"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: showApiKey ? "text" : "password",
     id: "apiKey",
-    value: apiKey,
-    onChange: e => setApiKey(e.target.value),
+    value: getActiveApiKey(),
+    onChange: e => setActiveApiKey(e.target.value),
     required: true,
-    placeholder: "sk-...",
+    placeholder: getApiPlaceholder(),
     spellCheck: "false",
     autoComplete: "off"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     type: "button",
     className: "toggle-visibility",
     onClick: () => setShowApiKey(!showApiKey)
-  }, showApiKey ? 'Hide' : 'Show'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, showApiKey ? "Hide" : "Show")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "api-key-help"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
+    href: getApiKeyLink(),
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, "Get", " ", activeService === "openai" ? "OpenAI" : activeService === "gemini" ? "Google Gemini" : "Anthropic Claude", " ", "API key"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "form-group fallback-keys"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    className: "fallback-label"
+  }, "Fallback API Keys (Optional)"), activeService !== "openai" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "fallback-key-input"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "openaiApiKey"
+  }, "OpenAI API Key"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "api-key-input"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    type: showApiKey ? "text" : "password",
+    id: "openaiApiKey",
+    value: openaiApiKey,
+    onChange: e => setOpenaiApiKey(e.target.value),
+    placeholder: "sk-...",
+    spellCheck: "false",
+    autoComplete: "off"
+  }))), activeService !== "gemini" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "fallback-key-input"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "geminiApiKey"
+  }, "Google Gemini API Key"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "api-key-input"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    type: showApiKey ? "text" : "password",
+    id: "geminiApiKey",
+    value: geminiApiKey,
+    onChange: e => setGeminiApiKey(e.target.value),
+    placeholder: "AI...",
+    spellCheck: "false",
+    autoComplete: "off"
+  }))), activeService !== "claude" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "fallback-key-input"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "claudeApiKey"
+  }, "Anthropic Claude API Key"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "api-key-input"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    type: showApiKey ? "text" : "password",
+    id: "claudeApiKey",
+    value: claudeApiKey,
+    onChange: e => setClaudeApiKey(e.target.value),
+    placeholder: "sk-ant-...",
+    spellCheck: "false",
+    autoComplete: "off"
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "form-group"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
     htmlFor: "language"

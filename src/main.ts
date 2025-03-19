@@ -3,7 +3,7 @@ import * as path from 'path';
 import * as fs from 'fs/promises';
 import { execFile } from 'child_process';
 import { promisify } from 'util';
-import openaiService from './services/openai';
+import aiService from './services/ai-service'; // Updated import from openai service
 
 const execFileAsync = promisify(execFile);
 
@@ -16,8 +16,12 @@ interface Screenshot {
 const CONFIG_FILE = path.join(app.getPath('userData'), 'config.json');
 console.log(CONFIG_FILE);
 
+// Updated config interface for multiple AI services
 interface Config {
-  apiKey: string;
+  activeService: string;
+  openaiApiKey?: string;
+  geminiApiKey?: string;
+  claudeApiKey?: string;
   language: string;
 }
 
@@ -40,25 +44,41 @@ async function ensureScreenshotDir() {
 async function loadConfig(): Promise<Config | null> {
   try {
     // First try loading from environment variables
-    const envApiKey = process.env.OPENAI_API_KEY;
+    const envOpenAIKey = process.env.OPENAI_API_KEY;
+    const envGeminiKey = process.env.GEMINI_API_KEY;
+    const envClaudeKey = process.env.CLAUDE_API_KEY;
+    const envActiveService = process.env.ACTIVE_SERVICE || 'openai';
     const envLanguage = process.env.APP_LANGUAGE;
 
-    if (envApiKey && envLanguage) {
-      const envConfig = {
-        apiKey: envApiKey,
+    // If we have at least one API key from env vars
+    if ((envOpenAIKey || envGeminiKey || envClaudeKey) && envLanguage) {
+      const envConfig: Config = {
+        activeService: envActiveService,
         language: envLanguage
       };
-      openaiService.updateConfig(envConfig);
+      
+      if (envOpenAIKey) envConfig.openaiApiKey = envOpenAIKey;
+      if (envGeminiKey) envConfig.geminiApiKey = envGeminiKey;
+      if (envClaudeKey) envConfig.claudeApiKey = envClaudeKey;
+      
+      aiService.updateConfig(envConfig);
       return envConfig;
     }
 
     // If env vars not found, try loading from config file
     const data = await fs.readFile(CONFIG_FILE, 'utf-8');
     const loadedConfig = JSON.parse(data);
-    if (loadedConfig && loadedConfig.apiKey && loadedConfig.language) {
-      openaiService.updateConfig(loadedConfig);
+    
+    // Validate the config has required values
+    if (loadedConfig && 
+        loadedConfig.activeService && 
+        loadedConfig.language && 
+        (loadedConfig.openaiApiKey || loadedConfig.geminiApiKey || loadedConfig.claudeApiKey)) {
+      
+      aiService.updateConfig(loadedConfig);
       return loadedConfig;
     }
+    
     return null;
   } catch (error) {
     console.error('Error loading config:', error);
@@ -68,13 +88,20 @@ async function loadConfig(): Promise<Config | null> {
 
 async function saveConfig(newConfig: Config): Promise<void> {
   try {
-    if (!newConfig.apiKey || !newConfig.language) {
-      throw new Error('Invalid configuration');
+    // Validate that the active service has an API key
+    const activeServiceKey = newConfig.activeService === 'openai' ? newConfig.openaiApiKey :
+                           newConfig.activeService === 'gemini' ? newConfig.geminiApiKey :
+                           newConfig.activeService === 'claude' ? newConfig.claudeApiKey : undefined;
+    
+    if (!activeServiceKey || !newConfig.language) {
+      throw new Error('Invalid configuration: API key for active service and language are required');
     }
+    
     await fs.writeFile(CONFIG_FILE, JSON.stringify(newConfig, null, 2));
     config = newConfig;
-    // Update OpenAI service with new config
-    openaiService.updateConfig(newConfig);
+    
+    // Update AI service with new config
+    aiService.updateConfig(newConfig);
   } catch (error) {
     console.error('Error saving config:', error);
     throw error;
@@ -211,9 +238,12 @@ async function handleProcessScreenshots() {
   mainWindow?.webContents.send('processing-started');
 
   try {
-    const result = await openaiService.processScreenshots(screenshotQueue);
+    // Pass the screenshots to the AI service for processing
+    const result = await aiService.processScreenshots(screenshotQueue);
+    
     // Check if processing was cancelled
     if (!isProcessing) return;
+    
     mainWindow?.webContents.send('processing-complete', JSON.stringify(result));
   } catch (error: any) {
     console.error('Error processing screenshots:', error);
@@ -366,4 +396,4 @@ ipcMain.handle('save-config', async (_, newConfig: Config) => {
     console.error('Error in save-config handler:', error);
     return false;
   }
-}); 
+});

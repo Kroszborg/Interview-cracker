@@ -1,3 +1,5 @@
+/* src/renderer/ConfigScreen.css - Updated CSS with additions for multi-model support */
+
 .config-screen {
   position: fixed;
   top: 0px;
@@ -12,6 +14,8 @@
   border-radius: 8px;
   width: 400px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.815);
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
 }
 
 .config-container h2 {
@@ -46,7 +50,8 @@
 .api-key-input input {
   flex: 1;
   padding: 0.4rem 0.75rem;
-  padding-right: 60px; /* Make space for the button */
+  padding-right: 60px;
+  /* Make space for the button */
   font-size: 0.85rem;
   border: none;
   border-radius: 4px;
@@ -149,4 +154,55 @@
 .save-button:active {
   background: rgba(0, 0, 0, 0.4);
   transform: translateY(1px);
-} 
+}
+
+/* New styles for fallback API keys */
+.fallback-keys {
+  margin-top: 1rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.fallback-label {
+  color: #abb2bf;
+  font-size: 0.7rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.fallback-key-input {
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.fallback-key-input label {
+  color: #abb2bf;
+  font-size: 0.7rem;
+}
+
+/* Model selection indicators */
+.model-indicator {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.6rem;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.model-openai {
+  background-color: rgba(16, 163, 127, 0.2);
+  color: #10a37f;
+}
+
+.model-gemini {
+  background-color: rgba(66, 133, 244, 0.2);
+  color: #4285f4;
+}
+
+.model-claude {
+  background-color: rgba(255, 140, 0, 0.2);
+  color: #ff8c00;
+}

@@ -41,7 +41,7 @@ const path = __importStar(require("path"));
 const fs = __importStar(require("fs/promises"));
 const child_process_1 = require("child_process");
 const util_1 = require("util");
-const openai_1 = __importDefault(require("./services/openai"));
+const ai_service_1 = __importDefault(require("./services/ai-service")); // Updated import from openai service
 const execFileAsync = (0, util_1.promisify)(child_process_1.execFile);
 const CONFIG_FILE = path.join(electron_1.app.getPath('userData'), 'config.json');
 console.log(CONFIG_FILE);
@@ -62,21 +62,35 @@ async function ensureScreenshotDir() {
 async function loadConfig() {
     try {
         // First try loading from environment variables
-        const envApiKey = process.env.OPENAI_API_KEY;
+        const envOpenAIKey = process.env.OPENAI_API_KEY;
+        const envGeminiKey = process.env.GEMINI_API_KEY;
+        const envClaudeKey = process.env.CLAUDE_API_KEY;
+        const envActiveService = process.env.ACTIVE_SERVICE || 'openai';
         const envLanguage = process.env.APP_LANGUAGE;
-        if (envApiKey && envLanguage) {
+        // If we have at least one API key from env vars
+        if ((envOpenAIKey || envGeminiKey || envClaudeKey) && envLanguage) {
             const envConfig = {
-                apiKey: envApiKey,
+                activeService: envActiveService,
                 language: envLanguage
             };
-            openai_1.default.updateConfig(envConfig);
+            if (envOpenAIKey)
+                envConfig.openaiApiKey = envOpenAIKey;
+            if (envGeminiKey)
+                envConfig.geminiApiKey = envGeminiKey;
+            if (envClaudeKey)
+                envConfig.claudeApiKey = envClaudeKey;
+            ai_service_1.default.updateConfig(envConfig);
             return envConfig;
         }
         // If env vars not found, try loading from config file
         const data = await fs.readFile(CONFIG_FILE, 'utf-8');
         const loadedConfig = JSON.parse(data);
-        if (loadedConfig && loadedConfig.apiKey && loadedConfig.language) {
-            openai_1.default.updateConfig(loadedConfig);
+        // Validate the config has required values
+        if (loadedConfig &&
+            loadedConfig.activeService &&
+            loadedConfig.language &&
+            (loadedConfig.openaiApiKey || loadedConfig.geminiApiKey || loadedConfig.claudeApiKey)) {
+            ai_service_1.default.updateConfig(loadedConfig);
             return loadedConfig;
         }
         return null;
@@ -88,13 +102,17 @@ async function loadConfig() {
 }
 async function saveConfig(newConfig) {
     try {
-        if (!newConfig.apiKey || !newConfig.language) {
-            throw new Error('Invalid configuration');
+        // Validate that the active service has an API key
+        const activeServiceKey = newConfig.activeService === 'openai' ? newConfig.openaiApiKey :
+            newConfig.activeService === 'gemini' ? newConfig.geminiApiKey :
+                newConfig.activeService === 'claude' ? newConfig.claudeApiKey : undefined;
+        if (!activeServiceKey || !newConfig.language) {
+            throw new Error('Invalid configuration: API key for active service and language are required');
         }
         await fs.writeFile(CONFIG_FILE, JSON.stringify(newConfig, null, 2));
         config = newConfig;
-        // Update OpenAI service with new config
-        openai_1.default.updateConfig(newConfig);
+        // Update AI service with new config
+        ai_service_1.default.updateConfig(newConfig);
     }
     catch (error) {
         console.error('Error saving config:', error);
@@ -215,7 +233,8 @@ async function handleProcessScreenshots() {
     isProcessing = true;
     mainWindow?.webContents.send('processing-started');
     try {
-        const result = await openai_1.default.processScreenshots(screenshotQueue);
+        // Pass the screenshots to the AI service for processing
+        const result = await ai_service_1.default.processScreenshots(screenshotQueue);
         // Check if processing was cancelled
         if (!isProcessing)
             return;

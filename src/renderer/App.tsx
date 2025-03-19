@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
-import ConfigScreen from './ConfigScreen';
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import ConfigScreen from "./ConfigScreen";
 
 interface Screenshot {
   id: number;
@@ -13,10 +13,15 @@ interface ProcessedSolution {
   code: string;
   timeComplexity: string;
   spaceComplexity: string;
+  error?: string;
 }
 
+// Updated config interface for multiple AI models
 interface Config {
-  apiKey: string;
+  activeService: string;
+  openaiApiKey?: string;
+  geminiApiKey?: string;
+  claudeApiKey?: string;
   language: string;
 }
 
@@ -62,55 +67,55 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    console.log('Setting up event listeners...');
+    console.log("Setting up event listeners...");
 
     // Listen for show config events
     window.electron.onShowConfig(() => {
-      setShowConfig(prev => !prev);
+      setShowConfig((prev) => !prev);
     });
 
     // Listen for processing started events
     window.electron.onProcessingStarted(() => {
-      console.log('Processing started');
+      console.log("Processing started");
       setIsProcessing(true);
       setResult(null);
     });
 
     // Keyboard event listener
     const handleKeyDown = async (event: KeyboardEvent) => {
-      console.log('Key pressed:', event.key);
-      
+      console.log("Key pressed:", event.key);
+
       // Check if Cmd/Ctrl is pressed
       const isCmdOrCtrl = event.metaKey || event.ctrlKey;
 
       switch (event.key.toLowerCase()) {
-        case 'h':
-          console.log('Screenshot hotkey pressed');
+        case "h":
+          console.log("Screenshot hotkey pressed");
           await handleTakeScreenshot();
           break;
-        case 'enter':
-          console.log('Process hotkey pressed');
+        case "enter":
+          console.log("Process hotkey pressed");
           await handleProcess();
           break;
-        case 'r':
-          console.log('Reset hotkey pressed');
+        case "r":
+          console.log("Reset hotkey pressed");
           await handleReset();
           break;
-        case 'p':
+        case "p":
           if (isCmdOrCtrl) {
-            console.log('Toggle config hotkey pressed');
-            setShowConfig(prev => !prev);
+            console.log("Toggle config hotkey pressed");
+            setShowConfig((prev) => !prev);
           }
           break;
-        case 'b':
+        case "b":
           if (isCmdOrCtrl) {
-            console.log('Toggle visibility hotkey pressed');
+            console.log("Toggle visibility hotkey pressed");
             // Toggle visibility logic here
           }
           break;
-        case 'q':
+        case "q":
           if (isCmdOrCtrl) {
-            console.log('Quit hotkey pressed');
+            console.log("Quit hotkey pressed");
             handleQuit();
           }
           break;
@@ -118,41 +123,41 @@ const App: React.FC = () => {
     };
 
     // Add keyboard event listener
-    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
 
     // Listen for processing complete events
     window.electron.onProcessingComplete((resultStr) => {
-      console.log('Processing complete. Result:', resultStr);
+      console.log("Processing complete. Result:", resultStr);
       try {
         const parsedResult = JSON.parse(resultStr) as ProcessedSolution;
         setResult(parsedResult);
       } catch (error) {
-        console.error('Error parsing result:', error);
+        console.error("Error parsing result:", error);
       }
       setIsProcessing(false);
     });
 
     // Listen for new screenshots
     window.electron.onScreenshotTaken((screenshot) => {
-      console.log('New screenshot taken:', screenshot);
-      setScreenshots(prev => {
+      console.log("New screenshot taken:", screenshot);
+      setScreenshots((prev) => {
         const newScreenshots = [...prev, screenshot];
-        console.log('Updated screenshots array:', newScreenshots);
+        console.log("Updated screenshots array:", newScreenshots);
         return newScreenshots;
       });
     });
 
     // Listen for queue reset
     window.electron.onQueueReset(() => {
-      console.log('Queue reset triggered');
+      console.log("Queue reset triggered");
       setScreenshots([]);
       setResult(null);
     });
 
     // Cleanup
     return () => {
-      console.log('Cleaning up event listeners...');
-      window.removeEventListener('keydown', handleKeyDown);
+      console.log("Cleaning up event listeners...");
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
 
@@ -166,23 +171,23 @@ const App: React.FC = () => {
   }, [error]);
 
   const handleTakeScreenshot = async () => {
-    console.log('Taking screenshot, current count:', screenshots.length);
+    console.log("Taking screenshot, current count:", screenshots.length);
     if (screenshots.length >= 4) {
-      console.log('Maximum screenshots reached');
+      console.log("Maximum screenshots reached");
       return;
     }
     try {
       await window.electron.takeScreenshot();
-      console.log('Screenshot taken successfully');
+      console.log("Screenshot taken successfully");
     } catch (error) {
-      console.error('Error taking screenshot:', error);
+      console.error("Error taking screenshot:", error);
     }
   };
 
   const handleProcess = async () => {
-    console.log('Starting processing. Current screenshots:', screenshots);
+    console.log("Starting processing. Current screenshots:", screenshots);
     if (screenshots.length === 0) {
-      console.log('No screenshots to process');
+      console.log("No screenshots to process");
       return;
     }
     setIsProcessing(true);
@@ -190,22 +195,44 @@ const App: React.FC = () => {
     setError(null);
     try {
       await window.electron.processScreenshots();
-      console.log('Process request sent successfully');
+      console.log("Process request sent successfully");
     } catch (error: any) {
-      console.error('Error processing screenshots:', error);
-      setError(error?.message || 'Error processing screenshots');
+      console.error("Error processing screenshots:", error);
+      setError(error?.message || "Error processing screenshots");
       setIsProcessing(false);
     }
   };
 
   const handleReset = async () => {
-    console.log('Resetting queue...');
+    console.log("Resetting queue...");
     await window.electron.resetQueue();
   };
 
   const handleQuit = () => {
-    console.log('Quitting application...');
+    console.log("Quitting application...");
     window.electron.quit();
+  };
+
+  // Get the name of the active AI model
+  const getModelName = () => {
+    if (!config) return "AI";
+
+    switch (config.activeService) {
+      case "openai":
+        return "GPT-4o";
+      case "gemini":
+        return "Gemini";
+      case "claude":
+        return "Claude";
+      default:
+        return "AI";
+    }
+  };
+
+  // Get CSS class for styling the model indicator
+  const getModelClass = () => {
+    if (!config) return "";
+    return `model-${config.activeService}`;
   };
 
   const handleConfigSave = async (newConfig: Config) => {
@@ -216,25 +243,25 @@ const App: React.FC = () => {
         setShowConfig(false);
         setError(null);
       } else {
-        setError('Failed to save configuration');
+        setError("Failed to save configuration");
       }
     } catch (error: any) {
-      console.error('Error saving configuration:', error);
-      setError(error?.message || 'Error saving configuration');
+      console.error("Error saving configuration:", error);
+      setError(error?.message || "Error saving configuration");
     }
   };
 
   // Log state changes
   useEffect(() => {
-    console.log('State update:', {
+    console.log("State update:", {
       isProcessing,
       result,
-      screenshotCount: screenshots.length
+      screenshotCount: screenshots.length,
     });
   }, [isProcessing, result, screenshots]);
 
   const formatCode = (code: string) => {
-    return code.split('\n').map((line, index) => (
+    return code.split("\n").map((line, index) => (
       <div key={index} className="code-line">
         <span className="line-number">{index + 1}</span>
         {line}
@@ -256,23 +283,42 @@ const App: React.FC = () => {
           initialConfig={config || undefined}
         />
       )}
-      
+
       {/* Preview Row */}
       <div className="shortcuts-row">
-        <div className="shortcut"><code>⌘/Ctrl + H</code> Screenshot</div>
-        <div className="shortcut"><code>⌘/Ctrl + ↵</code> Solution</div>
-        <div className="shortcut"><code>⌘/Ctrl + R</code> Reset</div>
+        <div className="shortcut">
+          <code>⌘/Ctrl + H</code> Screenshot
+        </div>
+        <div className="shortcut">
+          <code>⌘/Ctrl + ↵</code> Solution
+        </div>
+        <div className="shortcut">
+          <code>⌘/Ctrl + R</code> Reset
+        </div>
+        <div className="shortcut">
+          <span className={`model-indicator ${getModelClass()}`}>
+            {getModelName()}
+          </span>
+        </div>
         <div className="hover-shortcuts">
           <div className="hover-shortcuts-content">
-            <div className="shortcut"><code>⌘/Ctrl + B</code> Show/Hide</div>
-            <div className="shortcut"><code>⌘/Ctrl + P</code> Settings</div>
-            <div className="shortcut"><code>⌘/Ctrl + Q</code> Quit</div>
-            <div className="shortcut"><code>⌘/Ctrl + Arrow Keys</code> Move Around</div>
+            <div className="shortcut">
+              <code>⌘/Ctrl + B</code> Show/Hide
+            </div>
+            <div className="shortcut">
+              <code>⌘/Ctrl + P</code> Settings
+            </div>
+            <div className="shortcut">
+              <code>⌘/Ctrl + Q</code> Quit
+            </div>
+            <div className="shortcut">
+              <code>⌘/Ctrl + Arrow Keys</code> Move Around
+            </div>
           </div>
         </div>
       </div>
       <div className="preview-row">
-        {screenshots.map(screenshot => (
+        {screenshots.map((screenshot) => (
           <div key={screenshot.id} className="preview-item">
             <img src={screenshot.preview} alt="Screenshot preview" />
           </div>
@@ -282,7 +328,10 @@ const App: React.FC = () => {
       {/* Status Row */}
       <div className="status-row">
         {isProcessing ? (
-          <div className="processing">Processing... ({screenshots.length} screenshots)</div>
+          <div className="processing">
+            Processing with {getModelName()}... ({screenshots.length}{" "}
+            screenshots)
+          </div>
         ) : result ? (
           <div className="result">
             <div className="solution-section">
@@ -304,9 +353,11 @@ const App: React.FC = () => {
           </div>
         ) : (
           <div className="empty-status">
-            {screenshots.length > 0 
-              ? `Press ⌘/Ctrl + ↵ to process ${screenshots.length} screenshot${screenshots.length > 1 ? 's' : ''}`
-              : 'Press ⌘/Ctrl + H to take a screenshot'}
+            {screenshots.length > 0
+              ? `Press ⌘/Ctrl + ↵ to process ${screenshots.length} screenshot${
+                  screenshots.length > 1 ? "s" : ""
+                } with ${getModelName()}`
+              : "Press ⌘/Ctrl + H to take a screenshot"}
           </div>
         )}
       </div>
@@ -314,4 +365,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App; 
+export default App;

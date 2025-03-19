@@ -33,25 +33,131 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+// src/renderer/ConfigScreen.tsx
 const react_1 = __importStar(require("react"));
 require("./ConfigScreen.css");
 const ConfigScreen = ({ onSave, initialConfig }) => {
-    const [apiKey, setApiKey] = (0, react_1.useState)(initialConfig?.apiKey || '');
-    const [language, setLanguage] = (0, react_1.useState)(initialConfig?.language || 'Python');
+    const [activeService, setActiveService] = (0, react_1.useState)(initialConfig?.activeService || "openai");
+    const [openaiApiKey, setOpenaiApiKey] = (0, react_1.useState)(initialConfig?.openaiApiKey || "");
+    const [geminiApiKey, setGeminiApiKey] = (0, react_1.useState)(initialConfig?.geminiApiKey || "");
+    const [claudeApiKey, setClaudeApiKey] = (0, react_1.useState)(initialConfig?.claudeApiKey || "");
+    const [language, setLanguage] = (0, react_1.useState)(initialConfig?.language || "Python");
     const [showApiKey, setShowApiKey] = (0, react_1.useState)(false);
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSave({ apiKey: apiKey.trim(), language });
+        const config = {
+            activeService,
+            language,
+        };
+        // Only include API keys that are set
+        if (openaiApiKey)
+            config.openaiApiKey = openaiApiKey.trim();
+        if (geminiApiKey)
+            config.geminiApiKey = geminiApiKey.trim();
+        if (claudeApiKey)
+            config.claudeApiKey = claudeApiKey.trim();
+        onSave(config);
+    };
+    // Get the active API key based on selected service
+    const getActiveApiKey = () => {
+        switch (activeService) {
+            case "openai":
+                return openaiApiKey;
+            case "gemini":
+                return geminiApiKey;
+            case "claude":
+                return claudeApiKey;
+            default:
+                return "";
+        }
+    };
+    // Set the active API key based on selected service
+    const setActiveApiKey = (value) => {
+        switch (activeService) {
+            case "openai":
+                setOpenaiApiKey(value);
+                break;
+            case "gemini":
+                setGeminiApiKey(value);
+                break;
+            case "claude":
+                setClaudeApiKey(value);
+                break;
+        }
+    };
+    // Get placeholder text based on selected service
+    const getApiPlaceholder = () => {
+        switch (activeService) {
+            case "openai":
+                return "sk-...";
+            case "gemini":
+                return "AI...";
+            case "claude":
+                return "sk-ant-...";
+            default:
+                return "Enter API key";
+        }
+    };
+    // Get link for getting API key based on selected service
+    const getApiKeyLink = () => {
+        switch (activeService) {
+            case "openai":
+                return "https://platform.openai.com/account/api-keys";
+            case "gemini":
+                return "https://aistudio.google.com/app/apikey";
+            case "claude":
+                return "https://console.anthropic.com/settings/keys";
+            default:
+                return "#";
+        }
     };
     return (react_1.default.createElement("div", { className: "config-screen" },
         react_1.default.createElement("div", { className: "config-container" },
             react_1.default.createElement("h2", null, "Configuration"),
             react_1.default.createElement("form", { onSubmit: handleSubmit },
                 react_1.default.createElement("div", { className: "form-group" },
-                    react_1.default.createElement("label", { htmlFor: "apiKey" }, "OpenAI API Key"),
+                    react_1.default.createElement("label", { htmlFor: "activeService" }, "AI Service"),
+                    react_1.default.createElement("select", { id: "activeService", value: activeService, onChange: (e) => setActiveService(e.target.value), required: true },
+                        react_1.default.createElement("option", { value: "openai" }, "OpenAI (GPT-4o)"),
+                        react_1.default.createElement("option", { value: "gemini" }, "Google Gemini"),
+                        react_1.default.createElement("option", { value: "claude" }, "Anthropic Claude"))),
+                react_1.default.createElement("div", { className: "form-group" },
+                    react_1.default.createElement("label", { htmlFor: "apiKey" },
+                        activeService === "openai"
+                            ? "OpenAI"
+                            : activeService === "gemini"
+                                ? "Google Gemini"
+                                : "Anthropic Claude",
+                        " ",
+                        "API Key"),
                     react_1.default.createElement("div", { className: "api-key-input" },
-                        react_1.default.createElement("input", { type: showApiKey ? "text" : "password", id: "apiKey", value: apiKey, onChange: (e) => setApiKey(e.target.value), required: true, placeholder: "sk-...", spellCheck: "false", autoComplete: "off" }),
-                        react_1.default.createElement("button", { type: "button", className: "toggle-visibility", onClick: () => setShowApiKey(!showApiKey) }, showApiKey ? 'Hide' : 'Show'))),
+                        react_1.default.createElement("input", { type: showApiKey ? "text" : "password", id: "apiKey", value: getActiveApiKey(), onChange: (e) => setActiveApiKey(e.target.value), required: true, placeholder: getApiPlaceholder(), spellCheck: "false", autoComplete: "off" }),
+                        react_1.default.createElement("button", { type: "button", className: "toggle-visibility", onClick: () => setShowApiKey(!showApiKey) }, showApiKey ? "Hide" : "Show")),
+                    react_1.default.createElement("div", { className: "api-key-help" },
+                        react_1.default.createElement("a", { href: getApiKeyLink(), target: "_blank", rel: "noopener noreferrer" },
+                            "Get",
+                            " ",
+                            activeService === "openai"
+                                ? "OpenAI"
+                                : activeService === "gemini"
+                                    ? "Google Gemini"
+                                    : "Anthropic Claude",
+                            " ",
+                            "API key"))),
+                react_1.default.createElement("div", { className: "form-group fallback-keys" },
+                    react_1.default.createElement("label", { className: "fallback-label" }, "Fallback API Keys (Optional)"),
+                    activeService !== "openai" && (react_1.default.createElement("div", { className: "fallback-key-input" },
+                        react_1.default.createElement("label", { htmlFor: "openaiApiKey" }, "OpenAI API Key"),
+                        react_1.default.createElement("div", { className: "api-key-input" },
+                            react_1.default.createElement("input", { type: showApiKey ? "text" : "password", id: "openaiApiKey", value: openaiApiKey, onChange: (e) => setOpenaiApiKey(e.target.value), placeholder: "sk-...", spellCheck: "false", autoComplete: "off" })))),
+                    activeService !== "gemini" && (react_1.default.createElement("div", { className: "fallback-key-input" },
+                        react_1.default.createElement("label", { htmlFor: "geminiApiKey" }, "Google Gemini API Key"),
+                        react_1.default.createElement("div", { className: "api-key-input" },
+                            react_1.default.createElement("input", { type: showApiKey ? "text" : "password", id: "geminiApiKey", value: geminiApiKey, onChange: (e) => setGeminiApiKey(e.target.value), placeholder: "AI...", spellCheck: "false", autoComplete: "off" })))),
+                    activeService !== "claude" && (react_1.default.createElement("div", { className: "fallback-key-input" },
+                        react_1.default.createElement("label", { htmlFor: "claudeApiKey" }, "Anthropic Claude API Key"),
+                        react_1.default.createElement("div", { className: "api-key-input" },
+                            react_1.default.createElement("input", { type: showApiKey ? "text" : "password", id: "claudeApiKey", value: claudeApiKey, onChange: (e) => setClaudeApiKey(e.target.value), placeholder: "sk-ant-...", spellCheck: "false", autoComplete: "off" }))))),
                 react_1.default.createElement("div", { className: "form-group" },
                     react_1.default.createElement("label", { htmlFor: "language" }, "Preferred Language"),
                     react_1.default.createElement("select", { id: "language", value: language, onChange: (e) => setLanguage(e.target.value), required: true },
